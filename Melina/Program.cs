@@ -1,2 +1,3 @@
-﻿// See https://aka.ms/new-console-template for more information
-Console.WriteLine("Hello, World!");
+﻿WordCard wordCard = new WordCard("consistent", "последовательный");
+
+Console.WriteLine(wordCard.Word + " " + wordCard.Translation);
