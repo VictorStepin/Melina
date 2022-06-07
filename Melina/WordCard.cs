@@ -10,4 +10,11 @@
         Translation = translation;
         CreationDate = DateTime.Now;
     }
+
+    public WordCard(string word, string translation, DateTime creationDate)
+    {
+        Word = word;
+        Translation = translation;
+        CreationDate = creationDate;
+    }
 }
