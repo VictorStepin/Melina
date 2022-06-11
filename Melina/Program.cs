@@ -1,9 +1,11 @@
 ﻿var isProgramRunning = true;
-var wordCards = LoadWordCardsFromFile("words.txt");
+var wordCards = new List<WordCard>();
+LoadWordCardsFromFile("words.txt");
 
 Console.WriteLine("1 - Print all word cards");
 Console.WriteLine("2 - Add new word card");
-Console.WriteLine("3 - Delete word card");
+Console.WriteLine("3 - Add word cards from file");
+Console.WriteLine("4 - Delete word card");
 Console.WriteLine("x - Exit");
 
 while (isProgramRunning)
@@ -26,13 +28,25 @@ while (isProgramRunning)
 
             AddNewWordCard(word, translation);
             SaveWordCardsToFile("words.txt");
+            
             Console.WriteLine("The word card has been successfully added.");
             break;
         case ConsoleKey.D3:
+            Console.Write("Enter a path: ");
+            var path = Console.ReadLine();
+            
+            LoadWordCardsFromFile(path);
+            SaveWordCardsToFile("words.txt");
+            
+            Console.Write("The new word cards have been successfully added.");
+            break;
+        case ConsoleKey.D4:
             Console.Write("Enter a word to delete: ");
             var wordToDelete = Console.ReadLine();
+            
             DeleteWordCard(wordToDelete);
             SaveWordCardsToFile("words.txt");
+            
             Console.WriteLine("The word card has been successfully deleted.");
             break;
         case ConsoleKey.X:
@@ -41,11 +55,9 @@ while (isProgramRunning)
     }
 }
 
-List<WordCard> LoadWordCardsFromFile(string path)
+void LoadWordCardsFromFile(string path)
 {
     var lines = File.ReadAllLines(path);
-    var wordCards = new List<WordCard>();
-
     foreach (var line in lines)
     {
         var splittedLine = line.Split("\t", StringSplitOptions.None);
@@ -54,8 +66,6 @@ List<WordCard> LoadWordCardsFromFile(string path)
         var creationDate = DateTime.Parse(splittedLine[2]);
         wordCards.Add(new WordCard(word, translation, creationDate));
     }
-
-    return wordCards;
 }
 
 void SaveWordCardsToFile(string path)
