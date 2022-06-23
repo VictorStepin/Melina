@@ -78,7 +78,7 @@ void RunWordCardsManagementMenu()
                 if (confirmAddingInput.Key == ConsoleKey.Y)
                 {
                     AddNewWordCard(word, translation);
-                    SaveWordCardsToFile("words.txt");
+                    SaveWordCardsToFile("words.txt", wordCards);
                 }
 
                 pointerPosition = wordCards.Count - 1;
@@ -103,7 +103,7 @@ void RunWordCardsManagementMenu()
                 if (confirmEditingInput.Key == ConsoleKey.Y)
                 {
                     EditWordCard(wordCardToEdit, newWord, newTranslation);
-                    SaveWordCardsToFile("words.txt");
+                    SaveWordCardsToFile("words.txt", wordCards);
                 }
 
                 pointerPosition = wordCards.Count - 1;
@@ -119,16 +119,13 @@ void RunWordCardsManagementMenu()
                 if (confirmDeletingInput.Key == ConsoleKey.Y)
                 {
                     DeleteWordCard(wordCardToDelete);
-                    SaveWordCardsToFile("words.txt");
+                    SaveWordCardsToFile("words.txt", wordCards);
                 }
 
                 pointerPosition = wordCards.Count - 1;
                 break;
             case ConsoleKey.Backspace:
                 isWordCardsMenuActive = false;
-                break;
-            default:
-                UpdateWordCardsManagementMenu(pointerPosition);
                 break;
         }
     }
@@ -207,11 +204,11 @@ void RunTestingMenu()
 
         switch (input.Key)
         {
+            case ConsoleKey.D1:
+                RunAllCardsTest();
+                break;
             case ConsoleKey.Backspace:
                 isTestingMenuActive = false;
-                break;
-            default:
-                UpdateTestingMenu();
                 break;
         }
     }
@@ -221,9 +218,10 @@ void UpdateTestingMenu()
 {
     Console.Clear();
 
-    Console.WriteLine("IN DEVELOPMENT...");
+    Console.WriteLine("TESTING");
     Console.WriteLine();
 
+    Console.WriteLine("1 - All Cards Test");
     Console.WriteLine("Backspace - Back");
 }
 
@@ -240,13 +238,13 @@ void LoadWordCardsFromFile(string path)
     }
 }
 
-void SaveWordCardsToFile(string path)
+void SaveWordCardsToFile(string path, List<WordCard> wordCardsToSave)
 {
     var textToFile = "";
-    for (int i = 0; i < wordCards.Count; i++)
+    for (int i = 0; i < wordCardsToSave.Count; i++)
     {
-        textToFile += wordCards[i].Word + "\t" + wordCards[i].Translation + "\t" + wordCards[i].CreationDate;
-        if (i != wordCards.Count - 1) textToFile += "\r\n";
+        textToFile += wordCardsToSave[i].Word + "\t" + wordCardsToSave[i].Translation + "\t" + wordCardsToSave[i].CreationDate;
+        if (i != wordCardsToSave.Count - 1) textToFile += "\r\n";
     }
 
     File.WriteAllText(path, textToFile);
@@ -266,4 +264,95 @@ void EditWordCard(WordCard wordCard, string newWord, string newTranslation)
 void DeleteWordCard(WordCard wordCardToDelete)
 {
     wordCards.Remove(wordCardToDelete);
+}
+
+void RunAllCardsTest()
+{
+    var wordCardsToTest = Shuffle(wordCards);
+    //var wordCardsToTest = new List<WordCard>();
+    //for (int i = 0; i < 15; i++)
+    //{
+    //    var randomIndex = new Random().Next(0, wordCards.Count);
+    //    wordCardsToTest.Add(wordCards[randomIndex]);
+    //}
+
+    var incorrectAnsweredCards = new List<WordCard>();
+    var correctAnswersCount = 0;
+    var incorrectAnswersCount = 0;
+
+
+    for (int i = 0; i < wordCardsToTest.Count; i++)
+    {
+        Console.Clear();
+
+        Console.WriteLine("ALL CARDS TEST");
+        Console.WriteLine();
+
+        Console.WriteLine($"{wordCardsToTest.Count - i} words left");
+        Console.WriteLine();
+
+        Console.WriteLine($"Word: {wordCardsToTest[i].Word}");
+        
+        Console.Write("Press Enter to show translation");
+        Console.ReadKey();
+
+        Console.WriteLine($"Translation: {wordCardsToTest[i].Translation}");
+
+        Console.Write("Is your answer right? (Y/N): ");
+        var answerInput = Console.ReadKey();
+
+        switch (answerInput.Key)
+        {
+            case ConsoleKey.Y:
+                correctAnswersCount++;
+                break;
+            default:
+                incorrectAnsweredCards.Add(wordCardsToTest[i]);
+                incorrectAnswersCount++;
+                break;
+        }
+    }
+
+    Console.Clear();
+
+    Console.WriteLine("ALL CARDS TEST");
+    Console.WriteLine();
+
+    Console.WriteLine("RESULT");
+    Console.WriteLine();
+
+    Console.WriteLine($"Cards tested: {wordCardsToTest.Count}");
+    Console.WriteLine($"Correct: {correctAnswersCount}");
+    Console.WriteLine($"Incorrect: {incorrectAnswersCount}");
+    var percentage = (double)correctAnswersCount / wordCardsToTest.Count;
+    Console.WriteLine($"Percentage: {percentage} %");
+    Console.WriteLine();
+
+    var iwcFilePath = "incorrect_cards.txt"; //iwc - incorrect word cards
+    SaveWordCardsToFile(iwcFilePath, incorrectAnsweredCards);
+    Console.WriteLine($"Incorrect word cards saved to {iwcFilePath}");
+    Console.WriteLine();
+
+    Console.WriteLine("Press any key to return testing menu...");
+    Console.ReadKey();
+}
+
+List<WordCard> Shuffle(List<WordCard> wordCards)
+{
+    var shuffledList = new List<WordCard>();
+    for (int i = 0; i < wordCards.Count; i++)
+    {
+        shuffledList.Add(wordCards[i]);
+    }
+
+    for (int i = 0; i < shuffledList.Count; i++)
+    {
+        var randIndex = new Random().Next(0, shuffledList.Count);
+        
+        WordCard temp = shuffledList[randIndex];
+        shuffledList[randIndex] = shuffledList[i];
+        shuffledList[i] = temp;
+    }
+
+    return shuffledList;
 }
