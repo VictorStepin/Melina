@@ -1,5 +1,12 @@
-﻿var wordCards = new List<WordCard>();
+﻿const string ARROW_POINTER = "->";
+const string EMPTY_SPACE = "  ";
+var wcAreaLinesCount = 20;
+
+var wordCards = new List<WordCard>();
 LoadWordCardsFromFile("words.txt");
+
+
+var indexOffset = 0;
 
 var isProgramRunning = true;
 while (isProgramRunning)
@@ -41,7 +48,8 @@ void UpdateMainMenu()
 void RunWordCardsManagementMenu()
 {
     var isWordCardsMenuActive = true;
-    var pointerPosition = wordCards.Count - 1;
+    indexOffset = wordCards.Count - wcAreaLinesCount;
+    var pointerPosition  = wcAreaLinesCount - 1;
 
     while (isWordCardsMenuActive)
     {
@@ -52,16 +60,19 @@ void RunWordCardsManagementMenu()
         switch (input.Key)
         {
             case ConsoleKey.DownArrow:
-                if (pointerPosition < wordCards.Count - 1)
+                if (pointerPosition < wcAreaLinesCount - 1)
                 {
                     pointerPosition++;
                 }
+                else if (pointerPosition == wcAreaLinesCount - 1 && indexOffset < wordCards.Count - wcAreaLinesCount) indexOffset++;
+                
                 break;
             case ConsoleKey.UpArrow:
                 if (pointerPosition > 0)
                 {
                     pointerPosition--;
                 }
+                else if (pointerPosition == 0 && indexOffset > 0) indexOffset--;
                 break;
             case ConsoleKey.D1:
                 Console.Clear();
@@ -144,34 +155,23 @@ void UpdateWordCardsManagementMenu(int pointerPosition)
     Console.WriteLine(border);
 
     // Рисуем строки области карточек
-    var wcAreaLinesCount = 20;
-    for (int i = 0; i < wcAreaLinesCount; i++)
+    
+
+    var firstLine = 0;
+    var lastLine = wcAreaLinesCount - 1;
+    for (int lineNum = firstLine; lineNum <= lastLine; lineNum++)
     {
         var content = "|";
 
-        // Переключение указателя по строкам
-        if (pointerPosition < wcAreaLinesCount - 1)
-        {
-            if (i == pointerPosition) content += "->";
-            else content += "  ";
-        }
-        else
-        {
-            if (i == wcAreaLinesCount - 1) content += "->";
-            else content += "  ";
-        }
+
+        // Рисование указателя
+        if (lineNum == pointerPosition) content += ARROW_POINTER;
+        else content += EMPTY_SPACE;
+
 
         // Заполнение содержательной частью
-        WordCard wordCard;
-        if (pointerPosition < wcAreaLinesCount)
-        {
-            wordCard = wordCards[i];
-        }
-        else
-        {
-            wordCard = wordCards[pointerPosition - wcAreaLinesCount + 1 + i];
-        }
-        content += $"{wordCard.Word} {wordCard.Translation}";
+        WordCard thisLineWordCard = wordCards[lineNum + indexOffset];
+        content += $"{thisLineWordCard.Word} {thisLineWordCard.Translation}";
 
         // заполняем оставшуюся часть строки пробелами
         for (int j = 0; j < border.Length - content.Length + j - 1; j++)
