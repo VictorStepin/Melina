@@ -38,7 +38,3 @@ void UpdateMainMenu()
     Console.WriteLine("2 - Testing");
     Console.WriteLine("X - Exit");
 }
-
-
-
-

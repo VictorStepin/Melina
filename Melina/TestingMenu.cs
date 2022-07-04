@@ -10,8 +10,6 @@
         {
             wordCards = wordCardsList;
             isTestingMenuActive = true;
-
-
         }
 
         public void Run()

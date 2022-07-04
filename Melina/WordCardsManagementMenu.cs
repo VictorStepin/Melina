@@ -4,6 +4,7 @@
     {
         const string ARROW_POINTER = "->";
         const string EMPTY_SPACE = "  ";
+        const int MAX_LINES_COUNT = 20;
 
         private int wcAreaLinesCount;
         private int indexOffset;
@@ -17,7 +18,8 @@
         {
             wordCards = wordCardsList;
 
-            wcAreaLinesCount = 20;
+            if (wordCards.Count >= MAX_LINES_COUNT) wcAreaLinesCount = MAX_LINES_COUNT;
+            else wcAreaLinesCount = wordCards.Count;
             indexOffset = wordCards.Count - wcAreaLinesCount;
             pointerPosition = wcAreaLinesCount - 1;
 
@@ -64,9 +66,15 @@
                         if (confirmAddingInput.Key == ConsoleKey.Y)
                         {
                             wordCards.AddNewWordCard(word, translation);
-                        }
+                            if (wordCards.Count > MAX_LINES_COUNT) indexOffset++;
+                            else
+                            {
+                                wcAreaLinesCount++;
+                                pointerPosition++;
+                            }
 
-                        indexOffset++;
+                        }
+                        
                         break;
                     case ConsoleKey.D2:
                         var wordCardToEdit = wordCards.List[indexOffset + pointerPosition];
@@ -124,30 +132,35 @@
             // Рисуем верхнюю границу
             Console.WriteLine(border);
 
-            // Рисуем строки области карточек
-            var firstLine = 0;
-            var lastLine = wcAreaLinesCount - 1;
-            for (int lineNum = firstLine; lineNum <= lastLine; lineNum++)
+            if (wordCards.Count == 0)
             {
-                var content = "|";
-
-                // Рисование указателя
-                if (lineNum == pointerPosition) content += ARROW_POINTER;
-                else content += EMPTY_SPACE;
-
-                // Заполнение содержательной частью
-                WordCard thisLineWordCard = wordCards.List[lineNum + indexOffset];
-                content += $"{thisLineWordCard.Word} {thisLineWordCard.Translation}";
-
-                // заполняем оставшуюся часть строки пробелами
-                for (int j = 0; j < border.Length - content.Length + j - 1; j++)
+                Console.WriteLine("THERE ARE NO CARDS HERE. ADD ONE!");
+            }
+            else
+            {
+                // Рисуем строки области карточек
+                for (int lineNum = 0; lineNum < wcAreaLinesCount; lineNum++)
                 {
-                    content += " ";
+                    var content = "|";
+
+                    // Рисование указателя
+                    if (lineNum == pointerPosition) content += ARROW_POINTER;
+                    else content += EMPTY_SPACE;
+
+                    // Заполнение содержательной частью
+                    WordCard thisLineWordCard = wordCards.List[lineNum + indexOffset];
+                    content += $"{thisLineWordCard.Word} {thisLineWordCard.Translation}";
+
+                    // заполняем оставшуюся часть строки пробелами
+                    for (int j = 0; j < border.Length - content.Length + j - 1; j++)
+                    {
+                        content += " ";
+                    }
+
+                    content += "|";
+
+                    Console.WriteLine(content);
                 }
-
-                content += "|";
-
-                Console.WriteLine(content);
             }
 
             // Рисуем нижнюю границу и выводим количество карточек
