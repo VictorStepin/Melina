@@ -66,23 +66,17 @@
             var wordCardToAdd = new WordCard(word, translation);
             List.Add(wordCardToAdd);
             Count++;
-
-            SaveWordCardsToFile("Words.txt");
         }
 
         public void EditWordCard(WordCard wordCard, string newWord, string newTranslation)
         {
             List[List.IndexOf(wordCard)] = new WordCard(newWord, newTranslation);
-
-            SaveWordCardsToFile("Words.txt");
         }
 
         public void DeleteWordCard(WordCard wordCardToDelete)
         {
             List.Remove(wordCardToDelete);
             Count--;
-
-            SaveWordCardsToFile("Words.txt");
         }
     }
 }

@@ -1,6 +1,6 @@
 ﻿using Melina;
 
-WordCardsList wordCards = new WordCardsList("Words.txt");
+WordCardsList wordCards = new WordCardsList("words.txt");
 
 var isProgramRunning = true;
 while (isProgramRunning)
@@ -20,6 +20,7 @@ while (isProgramRunning)
         case ConsoleKey.X:
             Console.Clear();
             isProgramRunning = false;
+            wordCards.SaveWordCardsToFile("words.txt");
             break;
         default:
             UpdateMainMenu();

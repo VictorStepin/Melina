@@ -4,24 +4,24 @@
     {
         const string ARROW_POINTER = "->";
         const string EMPTY_SPACE = "  ";
-        const int MAX_LINES_COUNT = 20;
+        const int MAX_CONTENT_LINES_COUNT = 20;
+        
+        private WordCardsList wordCards;
 
-        private int wcAreaLinesCount;
+        private int contentLinesCount;
         private int pointerPosition;
         private int indexOffset;
 
         private bool isWordCardsMenuActive;
-        
-        private WordCardsList wordCards;
 
         public WordCardsManagementMenu(WordCardsList wordCardsList)
         {
             wordCards = wordCardsList;
 
-            if (wordCards.Count >= MAX_LINES_COUNT) wcAreaLinesCount = MAX_LINES_COUNT;
-            else wcAreaLinesCount = wordCards.Count;
-            pointerPosition = wcAreaLinesCount - 1;
-            indexOffset = wordCards.Count - wcAreaLinesCount;
+            if (wordCards.Count >= MAX_CONTENT_LINES_COUNT) contentLinesCount = MAX_CONTENT_LINES_COUNT;
+            else contentLinesCount = wordCards.Count;
+            pointerPosition = contentLinesCount - 1;
+            indexOffset = wordCards.Count - contentLinesCount;
 
             isWordCardsMenuActive = true;
         }
@@ -37,11 +37,11 @@
                 switch (input.Key)
                 {
                     case ConsoleKey.DownArrow:
-                        if (pointerPosition < wcAreaLinesCount - 1)
+                        if (pointerPosition < contentLinesCount - 1)
                         {
                             pointerPosition++;
                         }
-                        else if (pointerPosition == wcAreaLinesCount - 1 && indexOffset < wordCards.Count - wcAreaLinesCount) indexOffset++;
+                        else if (pointerPosition == contentLinesCount - 1 && indexOffset < wordCards.Count - contentLinesCount) indexOffset++;
 
                         break;
                     case ConsoleKey.UpArrow:
@@ -66,10 +66,10 @@
                         if (confirmAddingInput.Key == ConsoleKey.Y)
                         {
                             wordCards.AddNewWordCard(word, translation);
-                            if (wordCards.Count > MAX_LINES_COUNT) indexOffset++;
+                            if (wordCards.Count > MAX_CONTENT_LINES_COUNT) indexOffset++;
                             else
                             {
-                                wcAreaLinesCount++;
+                                contentLinesCount++;
                                 pointerPosition++;
                             }
 
@@ -111,10 +111,10 @@
                             wordCards.DeleteWordCard(wordCardToDelete);
                         }
 
-                        if (wordCards.Count > MAX_LINES_COUNT) indexOffset--;
+                        if (wordCards.Count > MAX_CONTENT_LINES_COUNT) indexOffset--;
                         else
                         {
-                            wcAreaLinesCount--;
+                            contentLinesCount--;
                             pointerPosition--;
                         }
                         break;
@@ -144,7 +144,7 @@
             else
             {
                 // Рисуем строки области карточек
-                for (int lineNum = 0; lineNum < wcAreaLinesCount; lineNum++)
+                for (int lineNum = 0; lineNum < contentLinesCount; lineNum++)
                 {
                     var content = "|";
 
