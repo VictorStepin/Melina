@@ -7,8 +7,8 @@
         const int MAX_LINES_COUNT = 20;
 
         private int wcAreaLinesCount;
-        private int indexOffset;
         private int pointerPosition;
+        private int indexOffset;
 
         private bool isWordCardsMenuActive;
         
@@ -20,8 +20,8 @@
 
             if (wordCards.Count >= MAX_LINES_COUNT) wcAreaLinesCount = MAX_LINES_COUNT;
             else wcAreaLinesCount = wordCards.Count;
-            indexOffset = wordCards.Count - wcAreaLinesCount;
             pointerPosition = wcAreaLinesCount - 1;
+            indexOffset = wordCards.Count - wcAreaLinesCount;
 
             isWordCardsMenuActive = true;
         }
@@ -111,7 +111,12 @@
                             wordCards.DeleteWordCard(wordCardToDelete);
                         }
 
-                        indexOffset--;
+                        if (wordCards.Count > MAX_LINES_COUNT) indexOffset--;
+                        else
+                        {
+                            wcAreaLinesCount--;
+                            pointerPosition--;
+                        }
                         break;
                     case ConsoleKey.Backspace:
                         isWordCardsMenuActive = false;
