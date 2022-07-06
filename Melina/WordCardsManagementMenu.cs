@@ -70,9 +70,8 @@
                             else
                             {
                                 contentLinesCount++;
-                                pointerPosition++;
                             }
-
+                            pointerPosition = contentLinesCount - 1;
                         }
                         
                         break;
