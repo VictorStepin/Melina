@@ -75,7 +75,7 @@
             Console.WriteLine($"Cards tested: {wordCards.Count}");
             Console.WriteLine($"Correct: {correctAnswersCount}");
             Console.WriteLine($"Incorrect: {incorrectAnswersCount}");
-            var percentage = (double)correctAnswersCount / wordCards.Count;
+            var percentage = Math.Round(((double)correctAnswersCount / wordCards.Count) * 100, 2);
             Console.WriteLine($"Percentage: {percentage} %");
             Console.WriteLine();
 
