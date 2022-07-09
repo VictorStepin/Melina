@@ -12,7 +12,7 @@
         private int pointerPosition;
         private int indexOffset;
 
-        private bool isWordCardsMenuActive;
+        private bool isMenuActive;
 
         public WordCardsManagementMenu(WordCardsList wordCardsList)
         {
@@ -23,12 +23,12 @@
             pointerPosition = contentLinesCount - 1;
             indexOffset = wordCards.Count - contentLinesCount;
 
-            isWordCardsMenuActive = true;
+            isMenuActive = true;
         }
 
         public void Run()
         {
-            while (isWordCardsMenuActive)
+            while (isMenuActive)
             {
                 Update(pointerPosition);
 
@@ -118,7 +118,7 @@
                         }
                         break;
                     case ConsoleKey.Backspace:
-                        isWordCardsMenuActive = false;
+                        isMenuActive = false;
                         break;
                 }
             }

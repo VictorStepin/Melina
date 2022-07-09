@@ -4,17 +4,17 @@
     {
         private WordCardsList wordCards;
 
-        private bool isTestingMenuActive;
+        private bool isMenuActive;
 
         public TestingMenu(WordCardsList wordCardsList)
         {
             wordCards = wordCardsList;
-            isTestingMenuActive = true;
+            isMenuActive = true;
         }
 
         public void Run()
         {
-            while (isTestingMenuActive)
+            while (isMenuActive)
             {
                 Update();
 
@@ -41,7 +41,7 @@
                         }
                         break;
                     case ConsoleKey.Backspace:
-                        isTestingMenuActive = false;
+                        isMenuActive = false;
                         break;
                 }
             }
