@@ -131,10 +131,10 @@
             Console.WriteLine("WORD CARDS");
             Console.WriteLine();
 
-            string border = "+--------------------------------------------------------------------------------+";
+            string wcAreaBorder = "+--------------------------------------------------------------------------------+";
 
             // Рисуем верхнюю границу
-            Console.WriteLine(border);
+            Console.WriteLine(wcAreaBorder);
 
             if (wordCards.Count == 0)
             {
@@ -145,35 +145,53 @@
                 // Рисуем строки области карточек
                 for (int lineNum = 0; lineNum < contentLinesCount; lineNum++)
                 {
-                    var content = "|";
+                    var sideBorder = "|";
+                    Console.Write(sideBorder);
 
-                    // Рисование указателя
-                    if (lineNum == pointerPosition) content += ARROW_POINTER;
-                    else content += EMPTY_SPACE;
+                    var content = "";
+
+                    // Выделение строки
+                    var isLineSelected = false;
+                    if (lineNum == pointerPosition)
+                    {
+                        InverseConsoleColors();
+                        isLineSelected = true;
+                    }
 
                     // Заполнение содержательной частью
                     WordCard thisLineWordCard = wordCards.List[lineNum + indexOffset];
                     content += $"{thisLineWordCard.Word} {thisLineWordCard.Translation}";
 
                     // заполняем оставшуюся часть строки пробелами
-                    for (int j = 0; j < border.Length - content.Length + j - 1; j++)
+                    for (int j = 0; j < wcAreaBorder.Length - content.Length + j - 2; j++)
                     {
                         content += " ";
                     }
 
-                    content += "|";
+                    Console.Write(content);
 
-                    Console.WriteLine(content);
+                    if (isLineSelected) InverseConsoleColors();
+
+                    Console.WriteLine(sideBorder);
                 }
             }
 
             // Рисуем нижнюю границу и выводим количество карточек
-            Console.WriteLine($"{border} Word Cards Count: {wordCards.Count}");
+            Console.WriteLine($"{wcAreaBorder} Word Cards Count: {wordCards.Count}");
 
             Console.WriteLine("1 - Add");
             Console.WriteLine("2 - Edit");
             Console.WriteLine("3 - Delete");
             Console.WriteLine("Backspace - Back");
+        }
+
+        private void InverseConsoleColors()
+        {
+            if (Console.BackgroundColor == ConsoleColor.Black) Console.BackgroundColor = ConsoleColor.White;
+            else if (Console.BackgroundColor == ConsoleColor.White) Console.BackgroundColor = ConsoleColor.Black;
+
+            if (Console.ForegroundColor == ConsoleColor.Gray) Console.ForegroundColor = ConsoleColor.Black;
+            else if (Console.ForegroundColor == ConsoleColor.Black) Console.ForegroundColor = ConsoleColor.Gray;
         }
     }
 }
