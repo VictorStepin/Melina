@@ -30,7 +30,6 @@
                     case ConsoleKey.X:
                         Console.Clear();
                         isMenuActive = false;
-                        wordCards.SaveWordCardsToFile("words.txt");
                         break;
                     default:
                         Update();

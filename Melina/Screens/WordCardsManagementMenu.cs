@@ -66,6 +66,7 @@
                         if (confirmAddingInput.Key == ConsoleKey.Y)
                         {
                             wordCards.AddNewWordCard(word, translation);
+                            
                             if (wordCards.Count > MAX_CONTENT_LINES_COUNT) indexOffset++;
                             else
                             {

@@ -28,7 +28,7 @@
 
         public void Run()
         {
-            var incorrectAnsweredCards = new WordCardsList();
+            var incorrectAnsweredCards = new WordCardsList("incorrect_cards.txt");
             var correctAnswersCount = 0;
             var incorrectAnswersCount = 0;
 
@@ -79,9 +79,9 @@
             Console.WriteLine($"Percentage: {percentage} %");
             Console.WriteLine();
 
-            var iwcFilePath = "incorrect_cards.txt"; //iwc - incorrect word cards
-            incorrectAnsweredCards.SaveWordCardsToFile(iwcFilePath);
-            Console.WriteLine($"Incorrect word cards saved to {iwcFilePath}");
+            //var iwcFilePath = "incorrect_cards.txt"; //iwc - incorrect word cards
+            //incorrectAnsweredCards.SaveWordCardsToFile(iwcFilePath);
+            Console.WriteLine($"Incorrect word cards saved.");
             Console.WriteLine();
 
             Console.WriteLine("Press any key to return testing menu...");

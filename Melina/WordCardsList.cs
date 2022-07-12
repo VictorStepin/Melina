@@ -6,34 +6,30 @@
 
         public List<WordCard> List { get; private set; }
 
+        private string savePath;
+
         /// <summary>
-        /// Creates a new word cards list from data file.
+        /// Creates a new word cards list from data file with given save path.
         /// </summary>
         /// <param name="filePath">Data file.</param>
-        public WordCardsList(string filePath)
+        /// <param name="savePath">Path to save current list.</param>
+        public WordCardsList(string filePath, string savePath)
         {
             List = new List<WordCard>();
             LoadWordCardsFromFile(filePath);
             Count = List.Count;
+            this.savePath = savePath;
         }
 
         /// <summary>
-        /// Creates a new word cards list from existing List object.
+        /// Creates a new epmty word cards list with given save path.
         /// </summary>
-        /// <param name="list">List with data.</param>
-        public WordCardsList(List<WordCard> list)
-        {
-            List = list;
-            Count = List.Count;
-        }
-
-        /// <summary>
-        /// Creates a new epmty word cards list.
-        /// </summary>
-        public WordCardsList()
+        /// <param name="savePath">Path to save current list.</param>
+        public WordCardsList(string savePath)
         {
             List = new List<WordCard>();
             Count = List.Count;
+            this.savePath = savePath;
         }
 
         private void LoadWordCardsFromFile(string path)
@@ -49,7 +45,7 @@
             }
         }
 
-        public void SaveWordCardsToFile(string path)
+        private void SaveWordCardsToFile()
         {
             var textToFile = "";
             for (int i = 0; i < List.Count; i++)
@@ -58,7 +54,7 @@
                 if (i != List.Count - 1) textToFile += "\r\n";
             }
 
-            File.WriteAllText(path, textToFile);
+            File.WriteAllText(savePath, textToFile);
         }
 
         public void AddNewWordCard(string word, string translation)
@@ -66,17 +62,20 @@
             var wordCardToAdd = new WordCard(word, translation);
             List.Add(wordCardToAdd);
             Count++;
+            SaveWordCardsToFile();
         }
 
         public void EditWordCard(WordCard wordCard, string newWord, string newTranslation)
         {
             List[List.IndexOf(wordCard)] = new WordCard(newWord, newTranslation);
+            SaveWordCardsToFile();
         }
 
         public void DeleteWordCard(WordCard wordCardToDelete)
         {
             List.Remove(wordCardToDelete);
             Count--;
+            SaveWordCardsToFile();
         }
     }
 }
