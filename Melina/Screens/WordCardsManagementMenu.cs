@@ -109,13 +109,13 @@
                         if (confirmDeletingInput.Key == ConsoleKey.Y)
                         {
                             wordCards.DeleteWordCard(wordCardToDelete);
-                        }
 
-                        if (wordCards.Count > MAX_CONTENT_LINES_COUNT) indexOffset--;
-                        else
-                        {
-                            contentLinesCount--;
-                            pointerPosition--;
+                            if (wordCards.Count > MAX_CONTENT_LINES_COUNT) indexOffset--;
+                            else
+                            {
+                                contentLinesCount--;
+                                pointerPosition--;
+                            }
                         }
                         break;
                     case ConsoleKey.Backspace:
