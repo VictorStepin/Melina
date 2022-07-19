@@ -34,14 +34,24 @@
 
         private void LoadWordCardsFromFile(string path)
         {
-            var lines = File.ReadAllLines(path);
-            foreach (var line in lines)
+            string[] lines;
+            try
             {
-                var splittedLine = line.Split("\t", StringSplitOptions.None);
-                var word = splittedLine[0];
-                var translation = splittedLine[1];
-                var creationDate = DateTime.Parse(splittedLine[2]);
-                List.Add(new WordCard(word, translation, creationDate));
+                lines = File.ReadAllLines(path);
+                foreach (var line in lines)
+                {
+                    var splittedLine = line.Split("\t", StringSplitOptions.None);
+                    var word = splittedLine[0];
+                    var translation = splittedLine[1];
+                    var creationDate = DateTime.Parse(splittedLine[2]);
+                    List.Add(new WordCard(word, translation, creationDate));
+                }
+            }
+            catch
+            {
+                Console.WriteLine($"File not found: {path}");
+                Console.WriteLine($"Press any key to continue...");
+                Console.ReadKey();
             }
         }
 
