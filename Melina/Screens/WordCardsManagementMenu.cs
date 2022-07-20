@@ -2,8 +2,6 @@
 {
     internal class WordCardsManagementMenu
     {
-        const string ARROW_POINTER = "->";
-        const string EMPTY_SPACE = "  ";
         const int MAX_CONTENT_LINES_COUNT = 20;
         
         private WordCardsList wordCards;
@@ -130,9 +128,16 @@
             Console.Clear();
 
             Console.WriteLine("WORD CARDS");
+            Console.WriteLine($"Total Word Cards Count: {wordCards.Count}");
             Console.WriteLine();
 
-            string wcAreaBorder = "+--------------------------------------------------------------------------------+";
+            //Формируем границу в зависимости от ширины окна
+            string wcAreaBorder = "+";
+            for (int i = 0; i < GlobalSettings.WINDOW_WIDTH - 2; i++)
+            {
+                wcAreaBorder += '-';
+            }
+            wcAreaBorder += "+";
 
             // Рисуем верхнюю границу
             Console.WriteLine(wcAreaBorder);
@@ -149,8 +154,6 @@
                     var sideBorder = "|";
                     Console.Write(sideBorder);
 
-                    var content = "";
-
                     // Выделение строки
                     var isLineSelected = false;
                     if (lineNum == pointerPosition)
@@ -161,10 +164,21 @@
 
                     // Заполнение содержательной частью
                     WordCard thisLineWordCard = wordCards.List[lineNum + indexOffset];
-                    content += $"{thisLineWordCard.Word} {thisLineWordCard.Translation}";
+                    var content = thisLineWordCard.Word;
 
-                    // заполняем оставшуюся часть строки пробелами
-                    for (int j = 0; j < wcAreaBorder.Length - content.Length + j - 2; j++)
+                    // Заполняем оставшуюся часть строки пробелами
+                    for (int i = 0; i < wcAreaBorder.Length / 2 - content.Length + i - 2; i++)
+                    {
+                        content += " ";
+                    }
+
+                    Console.Write(content);
+
+                    Console.Write(sideBorder);
+                    Console.Write(sideBorder);
+
+                    content = thisLineWordCard.Translation;
+                    for (int i = 0; i < wcAreaBorder.Length/2 - content.Length + i - 2; i++)
                     {
                         content += " ";
                     }
@@ -177,8 +191,8 @@
                 }
             }
 
-            // Рисуем нижнюю границу и выводим количество карточек
-            Console.WriteLine($"{wcAreaBorder} Word Cards Count: {wordCards.Count}");
+            // Рисуем нижнюю границу
+            Console.WriteLine(wcAreaBorder);
 
             Console.WriteLine("1 - Add");
             Console.WriteLine("2 - Edit");
