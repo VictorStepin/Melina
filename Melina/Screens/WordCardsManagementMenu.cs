@@ -133,7 +133,7 @@
 
             //Формируем границу в зависимости от ширины окна
             string wcAreaBorder = "+";
-            for (int i = 0; i < GlobalSettings.WINDOW_WIDTH - 2; i++)
+            for (int i = 0; i < GlobalSettings.WINDOW_WIDTH - 3; i++)
             {
                 wcAreaBorder += '-';
             }
@@ -178,7 +178,7 @@
                     Console.Write(sideBorder);
 
                     content = thisLineWordCard.Translation;
-                    for (int i = 0; i < wcAreaBorder.Length/2 - content.Length + i - 2; i++)
+                    for (int i = 0; i < wcAreaBorder.Length / 2 - content.Length + i - 1; i++)
                     {
                         content += " ";
                     }
