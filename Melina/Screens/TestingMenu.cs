@@ -18,7 +18,7 @@
             {
                 Update();
 
-                var input = Console.ReadKey();
+                var input = Console.ReadKey(true);
                 switch (input.Key)
                 {
                     case ConsoleKey.D1:
@@ -33,7 +33,7 @@
                             Console.WriteLine();
 
                             Console.WriteLine("Press any key to return testing menu...");
-                            Console.ReadKey();
+                            Console.ReadKey(true);
                         }
                         else
                         {

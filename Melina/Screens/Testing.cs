@@ -45,12 +45,12 @@
                 Console.WriteLine($"Word: {wordCards[i].Word}");
 
                 Console.WriteLine("Press Enter to show translation");
-                Console.ReadKey();
+                Console.ReadKey(true);
 
                 Console.WriteLine($"Translation: {wordCards[i].Translation}");
 
                 Console.Write("Is your answer right? (Y/N): ");
-                var answerInput = Console.ReadKey();
+                var answerInput = Console.ReadKey(true);
 
                 switch (answerInput.Key)
                 {
@@ -85,7 +85,7 @@
             Console.WriteLine();
 
             Console.WriteLine("Press any key to return testing menu...");
-            Console.ReadKey();
+            Console.ReadKey(true);
         }
 
         private List<WordCard> Shuffle(List<WordCard> wordCards)

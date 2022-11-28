@@ -30,7 +30,7 @@
             {
                 Update(pointerPosition);
 
-                var input = Console.ReadKey();
+                var input = Console.ReadKey(true);
 
                 switch (input.Key)
                 {
@@ -59,7 +59,7 @@
                         var translation = Console.ReadLine();
 
                         Console.Write("Confirm adding (Y/N): ");
-                        var confirmAddingInput = Console.ReadKey();
+                        var confirmAddingInput = Console.ReadKey(true);
 
                         if (confirmAddingInput.Key == ConsoleKey.Y)
                         {
@@ -88,7 +88,7 @@
                         var newTranslation = Console.ReadLine();
 
                         Console.Write("Confirm editing (Y/N): ");
-                        var confirmEditingInput = Console.ReadKey();
+                        var confirmEditingInput = Console.ReadKey(true);
 
                         if (confirmEditingInput.Key == ConsoleKey.Y)
                         {
@@ -102,7 +102,7 @@
                         Console.Clear();
 
                         Console.Write($"Confirm deleting \"{wordCardToDelete.Word}\" (Y/N): ");
-                        var confirmDeletingInput = Console.ReadKey();
+                        var confirmDeletingInput = Console.ReadKey(true);
 
                         if (confirmDeletingInput.Key == ConsoleKey.Y)
                         {

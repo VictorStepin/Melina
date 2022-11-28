@@ -17,7 +17,7 @@
             {
                 Update();
 
-                var input = Console.ReadKey();
+                var input = Console.ReadKey(true);
 
                 switch (input.Key)
                 {

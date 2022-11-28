@@ -51,7 +51,7 @@
             {
                 Console.WriteLine($"File not found: {path}");
                 Console.WriteLine($"Press any key to continue...");
-                Console.ReadKey();
+                Console.ReadKey(true);
             }
         }
 
