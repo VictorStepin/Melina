@@ -2,7 +2,7 @@
 {
     internal class WordCardsManagementMenu
     {
-        const int MAX_CONTENT_LINES_COUNT = 20;
+        private const int MAX_CONTENT_LINES_COUNT = 20;
         
         private WordCardsList wordCards;
 
@@ -36,10 +36,9 @@
                 {
                     case ConsoleKey.DownArrow:
                         if (pointerPosition < contentLinesCount - 1)
-                        {
                             pointerPosition++;
-                        }
-                        else if (pointerPosition == contentLinesCount - 1 && indexOffset < wordCards.Count - contentLinesCount) indexOffset++;
+                        else if (pointerPosition == contentLinesCount - 1 && indexOffset < wordCards.Count - contentLinesCount)
+                            indexOffset++;
 
                         break;
                     case ConsoleKey.UpArrow:
@@ -54,13 +53,21 @@
 
                         Console.Write("Enter a word: ");
                         var word = Console.ReadLine();
-
+            
+                        var wordTranslator = new WordTranslator();
+                        
+                        var translations = wordTranslator.GetTranslations(word);
+                        foreach (var tr in translations)
+                        {
+                            Console.WriteLine(tr);
+                        }
+            
                         Console.Write("Enter a translation: ");
                         var translation = Console.ReadLine();
-
+            
                         Console.Write("Confirm adding (Y/N): ");
                         var confirmAddingInput = Console.ReadKey(true);
-
+            
                         if (confirmAddingInput.Key == ConsoleKey.Y)
                         {
                             wordCards.AddNewWordCard(word, translation);
@@ -72,7 +79,6 @@
                             }
                             pointerPosition = contentLinesCount - 1;
                         }
-                        
                         break;
                     case ConsoleKey.D2:
                         var wordCardToEdit = wordCards.List[indexOffset + pointerPosition];
